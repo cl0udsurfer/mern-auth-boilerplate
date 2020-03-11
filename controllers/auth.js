@@ -77,7 +77,7 @@ exports.accountActivation = (req, res) => {
           });
         }
         return res.json({
-          message: 'Signup success. Please signin.'
+          message: 'Activation success. Please signin.'
         });
       });
     });
@@ -111,7 +111,8 @@ exports.signin = (req, res) => {
 
     return res.json({
       token,
-      user: { _id, name, email, role }
+      user: { _id, name, email, role },
+      message: 'Signin Success'
     });
   });
 };
