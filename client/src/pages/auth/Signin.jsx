@@ -5,7 +5,7 @@ import { authenticate, isAuth } from '../../utils/auth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
-const Signin = () => {
+const Signin = ({ history }) => {
   const [values, setValues] = useState({
     email: '',
     password: '',
@@ -46,7 +46,7 @@ const Signin = () => {
       });
   };
 
-  const signupForm = () => (
+  const signinForm = () => (
     <form>
       <div className='form-group'>
         <label className='text-muted'>Email</label>
@@ -66,6 +66,9 @@ const Signin = () => {
           value={password}
         />
       </div>
+      <div className='pb-3'>
+        <Link to='/forgot-password'>Forgot Password?</Link>
+      </div>
       <div>
         <button className='btn btn-primary' onClick={clickSubmit}>
           {buttonText}
@@ -78,9 +81,13 @@ const Signin = () => {
     <>
       <div className='col-md-6 offset-md-3'>
         <ToastContainer />
-        {isAuth() ? <Redirect to='/' /> : null}
+        {isAuth() && isAuth().role === 'admin'
+          ? history.push('/admin')
+          : isAuth() && isAuth().role === 'user'
+          ? history.push('/user')
+          : null}
         <h1 className='p-5 text-center'>Signin</h1>
-        {signupForm()}
+        {signinForm()}
       </div>
     </>
   );
